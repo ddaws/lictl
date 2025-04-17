@@ -4,9 +4,9 @@ use serde_json::Value;
 
 #[derive(clap::Args, Debug)]
 pub struct Args {
-    #[arg(long="by-id", id="broadcast-id")]
+    #[arg(long="by-id", id="BROADCAST_ID")]
     pub broadcast_id: Option<String>,
-    #[arg(long="by-round", id="round-id")]
+    #[arg(long="by-round", id="ROUND_ID")]
     pub round_id: Option<String>,
 }
 
