@@ -24,4 +24,4 @@ fi
 PGN=$(lictl broadcasts export "$BROADCAST_ID")
 
 # Import the PGN into the study
-lictl studies import "$STUDY_ID" "$PGN"
+lictl studies import "$STUDY_ID" --pgn "$PGN"
