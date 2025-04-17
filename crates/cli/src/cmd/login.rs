@@ -1,9 +1,7 @@
 use anyhow::Result;
 use dialoguer::Password;
 use keyring::Entry;
-
-const SERVICE_NAME: &str = "lictl";
-const USERNAME: &str = "lichess";
+use crate::constants::{SERVICE_NAME, USERNAME};
 
 pub async fn run() -> Result<()> {
     println!("Please enter your Lichess Personal Access Token.");

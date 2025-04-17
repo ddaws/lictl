@@ -1,9 +1,7 @@
 use anyhow::Result;
 use keyring::Entry;
 use reqwest::{Client, header::{HeaderMap, HeaderValue, AUTHORIZATION}};
-
-pub const SERVICE_NAME: &str = "lictl";
-pub const USERNAME: &str = "lichess";
+use crate::constants::{SERVICE_NAME, USERNAME};
 
 pub struct Context {
     pub client: Client,

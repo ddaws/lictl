@@ -1,8 +1,6 @@
 use anyhow::Result;
 use keyring::Entry;
-
-const SERVICE_NAME: &str = "lictl";
-const USERNAME: &str = "lichess";
+use crate::constants::{SERVICE_NAME, USERNAME};
 
 pub async fn run() -> Result<()> {
     let token_entry = Entry::new(SERVICE_NAME, USERNAME)?;
