@@ -41,10 +41,10 @@ async fn main() -> Result<()> {
             cmd::whoami::run(&context).await
         }
         Commands::Broadcasts(cmd) => {
-            cmd::broadcasts::run(cmd, &context).await
+            cmd::broadcasts::run(&context, cmd).await
         }
         Commands::Req(cmd) => {
-            cmd::req::run(cmd, &context).await
+            cmd::req::run(&context, cmd).await
         }
     }
 }

@@ -13,7 +13,7 @@ pub enum Commands {
     },
 }
 
-pub async fn run(cmd: Commands, ctx: &Context) -> Result<()> {
+pub async fn run(ctx: &Context, cmd: Commands) -> Result<()> {
     match cmd {
         Commands::Get { broadcast_id } => {
             get::run(&broadcast_id, ctx).await
