@@ -11,13 +11,13 @@ pub enum Commands {
     Import {
         /// The ID of the study
         study_id: String,
-        /// The PGN content to import
-        pgn: String,
+        #[command(flatten)]
+        args: import::Args,
     },
 }
 
 pub async fn run(ctx: &Context, cmd: Commands) -> Result<Value> {
     match cmd {
-        Commands::Import { study_id, pgn } => import::run(ctx, &study_id, &pgn).await,
+        Commands::Import { study_id, args } => import::run(ctx, &study_id, args).await,
     }
 } 
