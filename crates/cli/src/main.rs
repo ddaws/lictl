@@ -1,7 +1,9 @@
 mod cmd;
+mod context;
 
 use clap::{Parser, Subcommand};
 use anyhow::Result;
+use context::Context;
 
 #[derive(Parser)]
 #[command(name = "lictl")]
@@ -15,11 +17,13 @@ struct Cli {
 enum Commands {
     Login,
     Logout,
+    Whoami,
 }
 
 #[tokio::main(flavor = "current_thread")]
 async fn main() -> Result<()> {
     let cli = Cli::parse();
+    let context = Context::new()?;
 
     match cli.command {
         Commands::Login => {
@@ -27,6 +31,9 @@ async fn main() -> Result<()> {
         }
         Commands::Logout => {
             cmd::logout::run().await
+        }
+        Commands::Whoami => {
+            cmd::whoami::run(&context).await
         }
     }
 }
