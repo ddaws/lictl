@@ -1,0 +1,37 @@
+{
+  "group": "Freestyle Chess Grand Slam Tour 2025 - Paris",
+  "round": {
+    "createdAt": 1743798593842,
+    "finished": true,
+    "finishedAt": 1744127886972,
+    "id": "z51nQgyz",
+    "name": "Round 11",
+    "slug": "round-11",
+    "startsAt": 1744124400000,
+    "url": "https://lichess.org/broadcast/freestyle-chess-grand-slam-tour-2025-paris--round-robin/round-11/z51nQgyz"
+  },
+  "tour": {
+    "createdAt": 1743798199805,
+    "dates": [
+      1744023600000,
+      1744124400000
+    ],
+    "description": "Join the official [Lichess Chess960 team](https://lichess.org/team/lichess-chess960) for more Chess960 tournaments and other community driven events.",
+    "id": "CL83USHH",
+    "image": "https://image.lichess1.org/display?fmt=webp&h=400&op=thumbnail&path=relay:CL83USHH:3kaCSpbI.webp&w=800&sig=a654e8706ef28052c54f1a502fbbfff1c79d8ec7",
+    "info": {
+      "fideTc": "standard",
+      "format": "12-player round-robin",
+      "location": "Paris, France",
+      "players": "Carlsen, Nakamura, Gukesh, Erigaisi",
+      "standings": "https://chess-results.com/tnr1127210.aspx?art=1",
+      "tc": "10 min + 5 sec / move",
+      "timeZone": "Europe/Paris",
+      "website": "https://www.freestyle-chess.com/"
+    },
+    "name": "Freestyle Chess Grand Slam Tour 2025 - Paris | Round Robin",
+    "slug": "freestyle-chess-grand-slam-tour-2025-paris--round-robin",
+    "tier": 5,
+    "url": "https://lichess.org/broadcast/freestyle-chess-grand-slam-tour-2025-paris--round-robin/CL83USHH"
+  }
+}
