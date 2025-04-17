@@ -37,4 +37,4 @@ pub async fn run(ctx: &Context, study_id: &str, args: Args) -> Result<Value> {
     }
 
     response.json().await.map_err(Into::into)
-} 
+}

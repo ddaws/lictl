@@ -45,6 +45,13 @@ lictl broadcasts get --by-round <round-id>
 lictl broadcasts export <broadcast-id>
 ```
 
+### Broadcast Rounds
+
+```bash
+# Get broadcast round details
+lictl broadcast-rounds get <round-id>
+```
+
 ### Studies
 
 ```bash

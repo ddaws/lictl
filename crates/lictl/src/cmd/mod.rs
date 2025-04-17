@@ -1,3 +1,4 @@
+pub mod broadcast_rounds;
 pub mod broadcasts;
 pub mod login;
 pub mod logout;
