@@ -6,10 +6,23 @@ use serde_json::Value;
 const CONTENT_TYPE_JSON: HeaderValue = HeaderValue::from_static("application/json");
 const CONTENT_TYPE_JSON_ND: HeaderValue = HeaderValue::from_static("application/x-ndjson");
 
-pub async fn run(ctx: &Context, path: &str) -> Result<()> {
+pub async fn run(ctx: &Context, path: &str, query_params: &[String]) -> Result<()> {
     let url = format!("{}{}", API_BASE, path);
+    let mut request = ctx.client.get(&url);
 
-    let response = ctx.client.get(&url).send().await?;
+    // Parse and add query parameters
+    let params: Vec<(&str, &str)> = query_params
+        .iter()
+        .filter_map(|param| {
+            param.split_once('=').map(|(k, v)| (k.trim(), v.trim()))
+        })
+        .collect();
+
+    if !params.is_empty() {
+        request = request.query(&params);
+    }
+
+    let response = request.send().await?;
 
     if !response.status().is_success() {
         return Err(anyhow!("Request failed: {}", response.status()));

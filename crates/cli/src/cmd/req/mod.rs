@@ -10,11 +10,14 @@ pub enum Commands {
     Get {
         /// The API path (e.g. /api/account)
         path: String,
+        /// Query parameters in the format key=value
+        #[arg(trailing_var_arg = true)]
+        query: Vec<String>,
     },
 }
 
 pub async fn run(ctx: &Context, cmd: Commands) -> Result<()> {
     match cmd {
-        Commands::Get { path } => get::run(ctx, &path).await,
+        Commands::Get { path, query } => get::run(ctx, &path, &query).await,
     }
 }
