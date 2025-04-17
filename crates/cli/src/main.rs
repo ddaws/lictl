@@ -19,6 +19,10 @@ enum Commands {
     Login,
     Logout,
     Whoami,
+    #[command(subcommand)]
+    Broadcasts(cmd::broadcasts::Commands),
+    #[command(subcommand)]
+    Req(cmd::req::Commands),
 }
 
 #[tokio::main(flavor = "current_thread")]
@@ -35,6 +39,12 @@ async fn main() -> Result<()> {
         }
         Commands::Whoami => {
             cmd::whoami::run(&context).await
+        }
+        Commands::Broadcasts(cmd) => {
+            cmd::broadcasts::run(cmd, &context).await
+        }
+        Commands::Req(cmd) => {
+            cmd::req::run(cmd, &context).await
         }
     }
 }
