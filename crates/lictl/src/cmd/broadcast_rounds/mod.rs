@@ -3,7 +3,7 @@ use anyhow::Result;
 use clap::Subcommand;
 use serde_json::Value;
 
-mod get;
+pub mod get;
 
 #[derive(Subcommand)]
 pub enum Commands {

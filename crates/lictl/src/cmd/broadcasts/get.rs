@@ -33,13 +33,7 @@ async fn get_by_broadcast_id(ctx: &Context, broadcast_id: &str) -> Result<Value>
 }
 
 async fn get_by_round_id(ctx: &Context, round_id: &str) -> Result<Value> {
-    let url = format!("{}/broadcast/-/-/{}", API_BASE, round_id);
-
-    let response = ctx.client.get(&url).send().await?;
-
-    if !response.status().is_success() {
-        return Err(anyhow!("Failed to get broadcast: {}", response.status()));
-    }
-
-    response.json().await.map_err(Into::into)
+    let round_value = crate::cmd::broadcast_rounds::get::run(ctx, round_id).await?;
+    let broadcast_id = round_value["tour"]["id"].as_str().ok_or_else(|| anyhow!("Broadcast ID not found in round"))?;
+    get_by_broadcast_id(ctx, broadcast_id).await
 }
