@@ -1,13 +1,8 @@
-[package]
-name = "lictl"
-version = "0.1.0"
-edition = "2021"
+[workspace]
+resolver = "2"
+members = ["crates/*"]
 
-[[bin]]
-name = "lictl"
-path = "crates/cli/src/main.rs"
-
-[dependencies]
+[workspace.dependencies]
 anyhow = "1.0.97"
 chrono = { version = "0.4.40", features = ["std", "serde"] }
 clap = { version = "4.5.31", features = ["derive"] } 
