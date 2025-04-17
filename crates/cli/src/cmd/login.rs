@@ -18,4 +18,4 @@ pub async fn run() -> Result<()> {
     
     println!("✓ Token stored successfully!");  
     Ok(())
-}
+} 

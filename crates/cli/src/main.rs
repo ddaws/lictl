@@ -13,7 +13,7 @@ struct Cli {
 
 #[derive(Subcommand)]
 enum Commands {
-    Auth 
+    Login
 }
 
 #[tokio::main(flavor = "current_thread")]
@@ -21,8 +21,8 @@ async fn main() -> Result<()> {
     let cli = Cli::parse();
 
     match cli.command {
-        Commands::Auth => {
-            cmd::auth::run().await
+        Commands::Login => {
+            cmd::login::run().await
         }
     }
 }
