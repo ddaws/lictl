@@ -3,6 +3,7 @@ use anyhow::Result;
 use clap::Subcommand;
 
 mod get;
+mod export;
 
 #[derive(Subcommand)]
 pub enum Commands {
@@ -11,10 +12,16 @@ pub enum Commands {
         /// The ID of the broadcast
         broadcast_id: String,
     },
+    /// Export a broadcast as PGN
+    Export {
+        /// The ID of the broadcast
+        broadcast_id: String,
+    },
 }
 
 pub async fn run(ctx: &Context, cmd: Commands) -> Result<()> {
     match cmd {
-        Commands::Get { broadcast_id } => get::run(&broadcast_id, ctx).await,
+        Commands::Get { broadcast_id } => get::run(ctx, &broadcast_id).await,
+        Commands::Export { broadcast_id } => export::run(ctx, &broadcast_id).await,
     }
 }
