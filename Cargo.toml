@@ -1,0 +1,15 @@
+[package]
+name = "lictl"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "lictl"
+path = "crates/cli/src/main.rs"
+
+[dependencies]
+anyhow = "1.0.97"
+chrono = { version = "0.4.40", features = ["std", "serde"] }
+clap = { version = "4.5.31", features = ["derive"] } 
+serde = { version = "1.0.219", features = ["derive"] }
+tokio = { version = "1.44.1", features = ["macros", "rt"] }
