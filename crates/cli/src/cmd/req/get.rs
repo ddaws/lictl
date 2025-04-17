@@ -6,7 +6,7 @@ use serde_json::Value;
 const CONTENT_TYPE_JSON: HeaderValue = HeaderValue::from_static("application/json");
 const CONTENT_TYPE_JSON_ND: HeaderValue = HeaderValue::from_static("application/x-ndjson");
 
-pub async fn run(ctx: &Context, path: &str, query_params: &[String]) -> Result<()> {
+pub async fn run(ctx: &Context, path: &str, query_params: &[String]) -> Result<Value> {
     let url = format!("{}{}", API_BASE, path);
     let mut request = ctx.client.get(&url);
 
@@ -41,10 +41,7 @@ pub async fn run(ctx: &Context, path: &str, query_params: &[String]) -> Result<(
         let resp_body = response.text().await?;
         serde_json::from_str(&resp_body)?
     };
-
-    println!("{}", serde_json::to_string_pretty(&json)?);
-
-    Ok(())
+    Ok(json)
 }
 
 fn parse_json_nd(text: &str) -> Result<Value> {

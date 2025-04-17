@@ -10,7 +10,7 @@ pub struct Args {
     pub round_id: Option<String>,
 }
 
-pub async fn run(ctx: &Context, cmd: Args) -> Result<()> {
+pub async fn run(ctx: &Context, cmd: Args) -> Result<Value> {
     if let Some(broadcast_id) = cmd.broadcast_id {
         get_by_broadcast_id(ctx, &broadcast_id).await
     } else if let Some(round_id) = cmd.round_id {
@@ -20,7 +20,7 @@ pub async fn run(ctx: &Context, cmd: Args) -> Result<()> {
     }
 }
 
-pub async fn get_by_broadcast_id(ctx: &Context, broadcast_id: &str) -> Result<()> {
+async fn get_by_broadcast_id(ctx: &Context, broadcast_id: &str) -> Result<Value> {
     let url = format!("{}/broadcast/{}", API_BASE, broadcast_id);
 
     let response = ctx.client.get(&url).send().await?;
@@ -29,15 +29,11 @@ pub async fn get_by_broadcast_id(ctx: &Context, broadcast_id: &str) -> Result<()
         return Err(anyhow!("Failed to get broadcast: {}", response.status()));
     }
 
-    let json: Value = response.json().await?;
-    println!("{}", serde_json::to_string_pretty(&json)?);
-
-    Ok(())
+    response.json().await.map_err(Into::into)
 }
 
-pub async fn get_by_round_id(ctx: &Context, round_id: &str) -> Result<()> {
+async fn get_by_round_id(ctx: &Context, round_id: &str) -> Result<Value> {
     let url = format!("{}/broadcast/-/-/{}", API_BASE, round_id);
-    println!("{}", url);    
 
     let response = ctx.client.get(&url).send().await?;
 
@@ -45,10 +41,5 @@ pub async fn get_by_round_id(ctx: &Context, round_id: &str) -> Result<()> {
         return Err(anyhow!("Failed to get broadcast: {}", response.status()));
     }
 
-    // TODO: Deserialize the response into a struct representing the round and
-    //       retrieve the broadcast ID from the round.
-    let json: Value = response.json().await?;
-    println!("{}", serde_json::to_string_pretty(&json)?);
-
-    Ok(())
+    response.json().await.map_err(Into::into)
 }

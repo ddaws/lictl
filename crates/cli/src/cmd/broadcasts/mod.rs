@@ -1,7 +1,7 @@
 use crate::context::Context;
 use anyhow::Result;
 use clap::Subcommand;
-
+use serde_json::Value;
 mod get;
 mod export;
 
@@ -16,7 +16,7 @@ pub enum Commands {
     },
 }
 
-pub async fn run(ctx: &Context, cmd: Commands) -> Result<()> {
+pub async fn run(ctx: &Context, cmd: Commands) -> Result<Value> {
     match cmd {
         Commands::Get(args) => get::run(ctx, args).await,
         Commands::Export { broadcast_id } => export::run(ctx, &broadcast_id).await,

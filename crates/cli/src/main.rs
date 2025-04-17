@@ -5,6 +5,7 @@ mod context;
 use anyhow::Result;
 use clap::{Parser, Subcommand};
 use context::Context;
+use serde_json::Value;
 
 #[derive(Parser)]
 #[command(name = "lictl")]
@@ -30,11 +31,20 @@ async fn main() -> Result<()> {
     let cli = Cli::parse();
     let context = Context::new()?;
 
-    match cli.command {
-        Commands::Login => cmd::login::run().await,
-        Commands::Logout => cmd::logout::run().await,
-        Commands::Whoami => cmd::whoami::run(&context).await,
-        Commands::Broadcasts(cmd) => cmd::broadcasts::run(&context, cmd).await,
-        Commands::Req(cmd) => cmd::req::run(&context, cmd).await,
+    let output: Value = match cli.command {
+        Commands::Login => cmd::login::run().await?,
+        Commands::Logout => cmd::logout::run().await?,
+        Commands::Whoami => cmd::whoami::run(&context).await?,
+        Commands::Broadcasts(cmd) => cmd::broadcasts::run(&context, cmd).await?,
+        Commands::Req(cmd) => cmd::req::run(&context, cmd).await?,
+    };
+
+    // Print the output depending on the type of the output
+    match output {
+        Value::Null => {},
+        Value::String(s) => println!("{}", s),
+        _ => println!("{}", serde_json::to_string_pretty(&output)?),
     }
+
+    Ok(())
 }

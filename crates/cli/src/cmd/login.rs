@@ -2,8 +2,9 @@ use crate::constants::{SERVICE_NAME, USERNAME};
 use anyhow::Result;
 use dialoguer::Password;
 use keyring::Entry;
+use serde_json::Value;
 
-pub async fn run() -> Result<()> {
+pub async fn run() -> Result<Value> {
     println!("Please enter your Lichess Personal Access Token.");
     println!("You can generate one at: https://lichess.org/account/oauth/token");
 
@@ -13,5 +14,5 @@ pub async fn run() -> Result<()> {
     token_entry.set_password(&token)?;
 
     println!("✓ Token stored successfully!");
-    Ok(())
+    Ok(Value::Null)
 }

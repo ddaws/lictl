@@ -3,6 +3,7 @@ mod get;
 use crate::context::Context;
 use anyhow::Result;
 use clap::Subcommand;
+use serde_json::Value;
 
 #[derive(Subcommand)]
 pub enum Commands {
@@ -16,7 +17,7 @@ pub enum Commands {
     },
 }
 
-pub async fn run(ctx: &Context, cmd: Commands) -> Result<()> {
+pub async fn run(ctx: &Context, cmd: Commands) -> Result<Value> {
     match cmd {
         Commands::Get { path, query } => get::run(ctx, &path, &query).await,
     }
