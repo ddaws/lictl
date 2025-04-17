@@ -1,14 +1,11 @@
-use anyhow::{Result, anyhow};
+use crate::{constants::API_BASE, context::Context};
+use anyhow::{anyhow, Result};
 use serde_json::Value;
-use crate::{context::Context, constants::API_BASE};
 
 pub async fn run(broadcast_id: &str, ctx: &Context) -> Result<()> {
     let url = format!("{}/broadcast/{}", API_BASE, broadcast_id);
-    
-    let response = ctx.client
-        .get(&url)
-        .send()
-        .await?;
+
+    let response = ctx.client.get(&url).send().await?;
 
     if !response.status().is_success() {
         return Err(anyhow!("Failed to get broadcast: {}", response.status()));
@@ -18,4 +15,4 @@ pub async fn run(broadcast_id: &str, ctx: &Context) -> Result<()> {
     println!("{}", serde_json::to_string_pretty(&json)?);
 
     Ok(())
-} 
+}

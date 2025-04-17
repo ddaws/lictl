@@ -1,6 +1,6 @@
-use clap::Subcommand;
-use anyhow::Result;
 use crate::context::Context;
+use anyhow::Result;
+use clap::Subcommand;
 
 mod get;
 
@@ -15,8 +15,6 @@ pub enum Commands {
 
 pub async fn run(ctx: &Context, cmd: Commands) -> Result<()> {
     match cmd {
-        Commands::Get { broadcast_id } => {
-            get::run(&broadcast_id, ctx).await
-        }
+        Commands::Get { broadcast_id } => get::run(&broadcast_id, ctx).await,
     }
-} 
+}

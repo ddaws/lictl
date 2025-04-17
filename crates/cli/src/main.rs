@@ -1,9 +1,9 @@
 mod cmd;
-mod context;
 mod constants;
+mod context;
 
-use clap::{Parser, Subcommand};
 use anyhow::Result;
+use clap::{Parser, Subcommand};
 use context::Context;
 
 #[derive(Parser)]
@@ -31,20 +31,10 @@ async fn main() -> Result<()> {
     let context = Context::new()?;
 
     match cli.command {
-        Commands::Login => {
-            cmd::login::run().await
-        }
-        Commands::Logout => {
-            cmd::logout::run().await
-        }
-        Commands::Whoami => {
-            cmd::whoami::run(&context).await
-        }
-        Commands::Broadcasts(cmd) => {
-            cmd::broadcasts::run(&context, cmd).await
-        }
-        Commands::Req(cmd) => {
-            cmd::req::run(&context, cmd).await
-        }
+        Commands::Login => cmd::login::run().await,
+        Commands::Logout => cmd::logout::run().await,
+        Commands::Whoami => cmd::whoami::run(&context).await,
+        Commands::Broadcasts(cmd) => cmd::broadcasts::run(&context, cmd).await,
+        Commands::Req(cmd) => cmd::req::run(&context, cmd).await,
     }
 }

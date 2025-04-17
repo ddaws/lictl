@@ -1,21 +1,46 @@
-use anyhow::{Result, anyhow};
+use crate::{constants::API_BASE, context::Context};
+use anyhow::{anyhow, Result};
+use reqwest::header::HeaderValue;
 use serde_json::Value;
-use crate::{context::Context, constants::API_BASE};
 
-pub async fn run(path: &str, ctx: &Context) -> Result<()> {
+const CONTENT_TYPE_JSON: HeaderValue = HeaderValue::from_static("application/json");
+const CONTENT_TYPE_JSON_ND: HeaderValue = HeaderValue::from_static("application/x-ndjson");
+
+pub async fn run(ctx: &Context, path: &str) -> Result<()> {
     let url = format!("{}{}", API_BASE, path);
-    
-    let response = ctx.client
-        .get(&url)
-        .send()
-        .await?;
+
+    let response = ctx.client.get(&url).send().await?;
 
     if !response.status().is_success() {
         return Err(anyhow!("Request failed: {}", response.status()));
     }
 
-    let json: Value = response.json().await?;
+    let content_type = response
+        .headers()
+        .get("Content-Type")
+        .unwrap_or(&CONTENT_TYPE_JSON)
+        .clone();
+
+    let json = if content_type == CONTENT_TYPE_JSON_ND {
+        let resp_body = response.text().await?;
+        parse_json_nd(&resp_body)?
+    } else {
+        let resp_body = response.text().await?;
+        serde_json::from_str(&resp_body)?
+    };
+
     println!("{}", serde_json::to_string_pretty(&json)?);
 
     Ok(())
-} 
+}
+
+fn parse_json_nd(text: &str) -> Result<Value> {
+    let mut json_nd = Vec::new();
+
+    let mut lines = text.lines();
+    while let Some(line) = lines.next() {
+        let json: Value = serde_json::from_str(line)?;
+        json_nd.push(json);
+    }
+    Ok(Value::Array(json_nd))
+}
