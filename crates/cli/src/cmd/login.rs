@@ -13,8 +13,8 @@ pub async fn run() -> Result<()> {
         .with_prompt("Token")
         .interact()?;
 
-    let keyring = Entry::new(SERVICE_NAME, USERNAME)?;
-    keyring.set_password(&token)?;
+    let token_entry = Entry::new(SERVICE_NAME, USERNAME)?;
+    token_entry.set_password(&token)?;
     
     println!("✓ Token stored successfully!");  
     Ok(())
