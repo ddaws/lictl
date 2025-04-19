@@ -9,7 +9,7 @@ license = "AGPL-3.0-only"
 homepage = "https://github.com/ddaws/lictl"
 repository = "https://github.com/ddaws/lictl"
 documentation = "https://docs.rs/lictl"
-readme = "README.md"
+readme = "../../README.md"
 
 [dependencies]
 anyhow = { workspace = true }
