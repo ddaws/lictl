@@ -1,7 +1,15 @@
 [package]
 name = "lictl"
 version = "0.2.0"
-edition = "2021"
+edition = "2024"
+description = " A command line interface for scripting Lichess"
+keywords = ["chess", "lichess", "pgn"]
+categories = ["command-line-interface", "game-development"]
+license = "AGPL-3.0-only"
+homepage = "https://github.com/ddaws/lictl"
+repository = "https://github.com/ddaws/lictl"
+documentation = "https://docs.rs/lictl"
+readme = "README.md"
 
 [dependencies]
 anyhow = { workspace = true }
