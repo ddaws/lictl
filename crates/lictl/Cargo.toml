@@ -5,13 +5,19 @@ edition = "2021"
 
 [dependencies]
 anyhow = { workspace = true }
+axum = "0.7.5"
+base64 = "0.22.1"
 clap = { version = "4.5.31", features = ["derive"] } 
 dialoguer = "0.11.0"
 keyring = { version = "3.6.2" }
+rand = "0.8.5"
 reqwest = { version = "0.12.15", features = ["json"] }
 serde = { workspace = true }
 serde_json = "1.0.140"
-tokio = { version = "1.44.1", features = ["macros", "rt"] }
+sha2 = "0.10.8"
+tokio = { version = "1.44.1", features = ["macros", "rt", "rt-multi-thread"] }
+url = "2.5.0"
+webbrowser = "0.8.13"
 
 [target.'cfg(target_os = "linux")'.dependencies]
 # Enable linux-native feature only on Linux
