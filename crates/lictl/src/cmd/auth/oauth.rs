@@ -1,11 +1,6 @@
 use crate::constants::{API_BASE, SERVICE_NAME, USERNAME};
 use anyhow::{anyhow, Result};
-use axum::{
-    extract::Query,
-    response::Html,
-    routing::get,
-    Router,
-};
+use axum::{extract::Query, response::Html, routing::get, Router};
 use base64::{engine::general_purpose::URL_SAFE_NO_PAD, Engine};
 use keyring::Entry;
 use rand::{distributions::Alphanumeric, Rng};
@@ -70,7 +65,8 @@ pub async fn run() -> Result<Value> {
 
     // Build authorization URL
     let mut auth_url = Url::parse(&format!("{}/oauth", API_BASE))?;
-    auth_url.query_pairs_mut()
+    auth_url
+        .query_pairs_mut()
         .append_pair("response_type", "code")
         .append_pair("client_id", CLIENT_ID)
         .append_pair("redirect_uri", REDIRECT_URI)
@@ -96,17 +92,17 @@ pub async fn run() -> Result<Value> {
             let tx = Arc::clone(&tx);
             async move {
                 let params = params.0;
-                
+
                 // Verify state parameter
                 if params.state != state {
                     return Html("<html><body><h1>Authentication Failed</h1><p>Invalid state parameter. This could be a CSRF attack.</p></body></html>".to_string());
                 }
-                
+
                 // Send the authorization code through the channel
                 if let Some(tx) = tx.lock().unwrap().take() {
                     let _ = tx.send(params.code);
                 }
-                
+
                 Html("<html><body><h1>Authentication Successful</h1><p>You can now close this window and return to the CLI.</p></body></html>".to_string())
             }
         }),
@@ -114,22 +110,21 @@ pub async fn run() -> Result<Value> {
 
     let addr = SocketAddr::from(([127, 0, 0, 1], 8080));
     println!("Waiting for authentication callback...");
-    
-    let server = axum::Server::bind(&addr)
-        .serve(app.into_make_service());
-    
+
+    let server = axum::Server::bind(&addr).serve(app.into_make_service());
+
     let server_handle = tokio::spawn(server);
-    
+
     // Wait for the callback to receive the authorization code
     let auth_code = match rx.await {
         Ok(code) => code,
         Err(_) => return Err(anyhow!("Failed to receive authorization code")),
     };
-    
+
     // Exchange authorization code for access token
     let client = reqwest::Client::new();
     let token_url = format!("{}/token", API_BASE);
-    
+
     let token_request = TokenRequest {
         grant_type: "authorization_code".to_string(),
         code: auth_code,
@@ -137,26 +132,26 @@ pub async fn run() -> Result<Value> {
         redirect_uri: REDIRECT_URI.to_string(),
         client_id: CLIENT_ID.to_string(),
     };
-    
-    let token_response = client.post(&token_url)
-        .form(&token_request)
-        .send()
-        .await?;
-    
+
+    let token_response = client.post(&token_url).form(&token_request).send().await?;
+
     if !token_response.status().is_success() {
         let error_text = token_response.text().await?;
-        return Err(anyhow!("Failed to exchange authorization code for token: {}", error_text));
+        return Err(anyhow!(
+            "Failed to exchange authorization code for token: {}",
+            error_text
+        ));
     }
-    
+
     let token_data: TokenResponse = token_response.json().await?;
-    
+
     // Store the token in the keyring
     let token_entry = Entry::new(SERVICE_NAME, USERNAME)?;
     token_entry.set_password(&token_data.access_token)?;
-    
+
     // Shutdown the server
     server_handle.abort();
-    
+
     println!("✓ OAuth authentication successful!");
     println!("✓ Token stored successfully!");
     Ok(Value::Null)
