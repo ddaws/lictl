@@ -4,8 +4,9 @@
 
 When working with this Rust project:
 
-- Always run `cargo check` before `cargo build` to save time checking for errors
-- Always run `cargo fmt --check` to check for formatting errors before opening a PR
+NEVER run `cargo check`, `cargo build`, or `cargo test`. Rely on Github workflows to build and test by pushing changes and WAITING FOR CI TO COMPLETE BEFORE ASSUMING THE TASK HAS BEEN COMPLETED SUCCESSFULLY. Check the results of the CI. If the CI failed look at the reason and attempt to fix the failure.
+
+ALWAYS run `cargo fmt --all` before committing changes to ensure they pass formatting.
 
 ## Commit Messages
 
