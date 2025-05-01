@@ -2,8 +2,8 @@ use crate::context::Context;
 use anyhow::Result;
 use clap::Subcommand;
 use serde_json::Value;
-mod get;
 mod export;
+mod get;
 
 #[derive(Subcommand)]
 pub enum Commands {
