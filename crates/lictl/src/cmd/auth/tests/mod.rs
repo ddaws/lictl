@@ -17,7 +17,7 @@ mod tests {
     #[tokio::test]
     async fn test_auth_module_structure() {
         setup();
-        
+
         // This test just verifies that the auth module and its submodules exist
         // and can be imported correctly
         assert!(true, "Auth module structure is valid");
