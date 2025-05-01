@@ -1,5 +1,6 @@
 pub mod broadcast_rounds;
 pub mod broadcasts;
+pub mod games;
 pub mod login;
 pub mod logout;
 pub mod req;

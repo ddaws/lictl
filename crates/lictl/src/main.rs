@@ -23,6 +23,8 @@ enum Commands {
     #[command(subcommand)]
     Broadcasts(cmd::broadcasts::Commands),
     #[command(subcommand)]
+    Games(cmd::games::Commands),
+    #[command(subcommand)]
     Studies(cmd::studies::Commands),
     #[command(subcommand)]
     BroadcastRounds(cmd::broadcast_rounds::Commands),
@@ -40,6 +42,7 @@ async fn main() -> Result<()> {
         Commands::Logout => cmd::logout::run().await?,
         Commands::Whoami => cmd::whoami::run(&context).await?,
         Commands::Broadcasts(cmd) => cmd::broadcasts::run(&context, cmd).await?,
+        Commands::Games(cmd) => cmd::games::run(&context, cmd).await?,
         Commands::Studies(cmd) => cmd::studies::run(&context, cmd).await?,
         Commands::BroadcastRounds(cmd) => cmd::broadcast_rounds::run(&context, cmd).await?,
         Commands::Req(cmd) => cmd::req::run(&context, cmd).await?,
