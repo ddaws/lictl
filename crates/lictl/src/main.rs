@@ -50,7 +50,7 @@ async fn main() -> Result<()> {
 
     // Print the output depending on the type of the output
     match output {
-        Value::Null => {},
+        Value::Null => {}
         Value::String(s) => println!("{}", s),
         _ => println!("{}", serde_json::to_string_pretty(&output)?),
     }

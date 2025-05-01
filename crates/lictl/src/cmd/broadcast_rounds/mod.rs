@@ -19,4 +19,4 @@ pub async fn run(ctx: &Context, cmd: Commands) -> Result<Value> {
     match cmd {
         Commands::Get { round_id } => get::run(ctx, &round_id).await,
     }
-} 
+}

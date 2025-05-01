@@ -8,8 +8,11 @@ pub async fn run(ctx: &Context, round_id: &str) -> Result<Value> {
     let response = ctx.client.get(&url).send().await?;
 
     if !response.status().is_success() {
-        return Err(anyhow!("Failed to get broadcast round: {}", response.status()));
+        return Err(anyhow!(
+            "Failed to get broadcast round: {}",
+            response.status()
+        ));
     }
 
     response.json().await.map_err(Into::into)
-} 
+}

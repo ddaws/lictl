@@ -4,9 +4,9 @@ use serde_json::Value;
 
 #[derive(clap::Args, Debug)]
 pub struct Args {
-    #[arg(long="by-id", id="BROADCAST_ID")]
+    #[arg(long = "by-id", id = "BROADCAST_ID")]
     pub broadcast_id: Option<String>,
-    #[arg(long="by-round", id="ROUND_ID")]
+    #[arg(long = "by-round", id = "ROUND_ID")]
     pub round_id: Option<String>,
 }
 
@@ -34,6 +34,8 @@ async fn get_by_broadcast_id(ctx: &Context, broadcast_id: &str) -> Result<Value>
 
 async fn get_by_round_id(ctx: &Context, round_id: &str) -> Result<Value> {
     let round_value = crate::cmd::broadcast_rounds::get::run(ctx, round_id).await?;
-    let broadcast_id = round_value["tour"]["id"].as_str().ok_or_else(|| anyhow!("Broadcast ID not found in round"))?;
+    let broadcast_id = round_value["tour"]["id"]
+        .as_str()
+        .ok_or_else(|| anyhow!("Broadcast ID not found in round"))?;
     get_by_broadcast_id(ctx, broadcast_id).await
 }
