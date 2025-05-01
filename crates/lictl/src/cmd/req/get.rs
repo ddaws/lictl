@@ -13,9 +13,7 @@ pub async fn run(ctx: &Context, path: &str, query_params: &[String]) -> Result<V
     // Parse and add query parameters
     let params: Vec<(&str, &str)> = query_params
         .iter()
-        .filter_map(|param| {
-            param.split_once('=').map(|(k, v)| (k.trim(), v.trim()))
-        })
+        .filter_map(|param| param.split_once('=').map(|(k, v)| (k.trim(), v.trim())))
         .collect();
 
     if !params.is_empty() {
@@ -47,8 +45,8 @@ pub async fn run(ctx: &Context, path: &str, query_params: &[String]) -> Result<V
 fn parse_json_nd(text: &str) -> Result<Value> {
     let mut json_nd = Vec::new();
 
-    let mut lines = text.lines();
-    while let Some(line) = lines.next() {
+    let lines = text.lines();
+    for line in lines {
         let json: Value = serde_json::from_str(line)?;
         json_nd.push(json);
     }
