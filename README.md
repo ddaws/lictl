@@ -5,12 +5,7 @@ A command-line interface for interacting with Lichess.org's API to make it easy 
 ## Installation
 
 ```bash
-# Clone the repository
-git clone https://github.com/yourusername/lictl.git
-cd lictl
-
-# Build and install
-cargo install --path crates/lictl
+cargo install lictl
 ```
 
 ## Authentication
