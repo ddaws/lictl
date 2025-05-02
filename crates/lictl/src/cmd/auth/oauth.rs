@@ -110,7 +110,9 @@ pub async fn run() -> Result<Value> {
     });
 
     // Wait for the callback to receive the authorization code
-    let auth_code = rx.await.map_err(|_| anyhow!("Failed to receive authorization code"))?;
+    let auth_code = rx
+        .await
+        .map_err(|_| anyhow!("Failed to receive authorization code"))?;
 
     // Exchange authorization code for access token
     let client = reqwest::Client::new();
