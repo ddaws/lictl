@@ -33,8 +33,6 @@ struct TokenRequest {
 #[derive(Debug, Deserialize)]
 struct TokenResponse {
     access_token: String,
-    token_type: String,
-    expires_in: u64,
 }
 
 pub async fn run() -> Result<Value> {
@@ -107,7 +105,7 @@ pub async fn run() -> Result<Value> {
     println!("Waiting for authentication callback...");
 
     let server_handle = tokio::spawn(async move {
-        let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await.unwrap();
+        let listener = tokio::net::TcpListener::bind("0.0.0.0:8080").await.unwrap();
         axum::serve(listener, app).await.unwrap();
     });
 
