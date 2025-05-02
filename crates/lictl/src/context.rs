@@ -28,4 +28,10 @@ impl Context {
 
         Ok(Context { client })
     }
+
+    #[cfg(test)]
+    pub fn new_with_base_url(base_url: &str) -> Result<Self> {
+        let client = Client::builder().build()?;
+        Ok(Context { client })
+    }
 }
