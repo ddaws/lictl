@@ -1,9 +1,9 @@
-use crate::{constants::API_BASE, context::Context};
+use crate::{constants::LICHESS_BASE, context::Context};
 use anyhow::{anyhow, Result};
 use serde_json::Value;
 
 pub async fn run(ctx: &Context, game_id: &str) -> Result<Value> {
-    let url = format!("{}/game/export/{}", API_BASE, game_id);
+    let url = format!("{}/game/export/{}", LICHESS_BASE, game_id);
 
     let response = ctx.client.get(&url).send().await?;
 
