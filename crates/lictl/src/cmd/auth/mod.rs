@@ -3,8 +3,6 @@ use clap::Subcommand;
 use serde_json::Value;
 
 pub mod oauth;
-#[cfg(test)]
-mod tests;
 pub mod token;
 
 #[derive(Subcommand)]

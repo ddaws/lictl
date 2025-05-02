@@ -1,4 +1,4 @@
-use crate::constants::{API_BASE, SERVICE_NAME, USERNAME};
+use crate::constants::{API_BASE, OAUTH_URL, SERVICE_NAME, USERNAME};
 use anyhow::{anyhow, Result};
 use axum::{extract::Query, response::Html, routing::get, Router};
 use base64::{engine::general_purpose::URL_SAFE_NO_PAD, Engine};
@@ -7,17 +7,13 @@ use rand::{distributions::Alphanumeric, Rng};
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use sha2::{Digest, Sha256};
-use std::{
-    collections::HashMap,
-    net::SocketAddr,
-    sync::{Arc, Mutex},
-};
+use std::sync::{Arc, Mutex};
 use tokio::sync::oneshot;
 use url::Url;
 
 const REDIRECT_URI: &str = "http://localhost:8080/callback";
 const CLIENT_ID: &str = "lictl";
-const SCOPES: &str = "challenge:read challenge:write board:play";
+const SCOPES: &str = "puzzle:read follow:read team:read study:read study:write engine:read";
 
 #[derive(Debug, Deserialize)]
 struct CallbackParams {
@@ -64,7 +60,7 @@ pub async fn run() -> Result<Value> {
         .collect();
 
     // Build authorization URL
-    let mut auth_url = Url::parse(&format!("{}/oauth", API_BASE))?;
+    let mut auth_url = Url::parse(OAUTH_URL)?;
     auth_url
         .query_pairs_mut()
         .append_pair("response_type", "code")
@@ -108,18 +104,15 @@ pub async fn run() -> Result<Value> {
         }),
     );
 
-    let addr = SocketAddr::from(([127, 0, 0, 1], 8080));
     println!("Waiting for authentication callback...");
 
-    let server = axum::Server::bind(&addr).serve(app.into_make_service());
-
-    let server_handle = tokio::spawn(server);
+    let server_handle = tokio::spawn(async move {
+        let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await.unwrap();
+        axum::serve(listener, app).await.unwrap();
+    });
 
     // Wait for the callback to receive the authorization code
-    let auth_code = match rx.await {
-        Ok(code) => code,
-        Err(_) => return Err(anyhow!("Failed to receive authorization code")),
-    };
+    let auth_code = rx.await.map_err(|_| anyhow!("Failed to receive authorization code"))?;
 
     // Exchange authorization code for access token
     let client = reqwest::Client::new();
