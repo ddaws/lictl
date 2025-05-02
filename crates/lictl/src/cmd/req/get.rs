@@ -1,5 +1,5 @@
 use crate::{constants::API_BASE, context::Context};
-use anyhow::{anyhow, Result};
+use anyhow::{Result, anyhow};
 use reqwest::header::HeaderValue;
 use serde_json::Value;
 

@@ -2,8 +2,8 @@ use crate::constants::{SERVICE_NAME, USERNAME};
 use anyhow::Result;
 use keyring::Entry;
 use reqwest::{
-    header::{HeaderMap, HeaderValue, AUTHORIZATION},
     Client,
+    header::{AUTHORIZATION, HeaderMap, HeaderValue},
 };
 
 pub struct Context {

@@ -1,9 +1,9 @@
 use crate::constants::{API_BASE, OAUTH_URL, SERVICE_NAME, USERNAME};
-use anyhow::{anyhow, Result};
-use axum::{extract::Query, response::Html, routing::get, Router};
-use base64::{engine::general_purpose::URL_SAFE_NO_PAD, Engine};
+use anyhow::{Result, anyhow};
+use axum::{Router, extract::Query, response::Html, routing::get};
+use base64::{Engine, engine::general_purpose::URL_SAFE_NO_PAD};
 use keyring::Entry;
-use rand::{distributions::Alphanumeric, Rng};
+use rand::{Rng, distributions::Alphanumeric};
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use sha2::{Digest, Sha256};

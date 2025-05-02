@@ -1,5 +1,5 @@
 use crate::{constants::API_BASE, context::Context};
-use anyhow::{anyhow, Result};
+use anyhow::{Result, anyhow};
 use serde_json::Value;
 
 pub async fn run(ctx: &Context, round_id: &str) -> Result<Value> {
