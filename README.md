@@ -15,20 +15,14 @@ cargo install --path crates/lictl
 
 ## Authentication
 
-Before using commands that require authentication, you'll need to log in with a Lichess API token:
+Before using commands that require authentication, you'll need to log into Lichess:
 
 ```bash
-# Store your token securely
 lictl login
 
 # Verify your authentication
 lictl whoami
-
-# Remove stored token
-lictl logout
 ```
-
-You can generate a personal access token at: https://lichess.org/account/oauth/token
 
 ## Commands
 
@@ -99,7 +93,3 @@ cargo build --release
 3. Commit your changes
 4. Push to the branch
 5. Create a Pull Request
-
-## License
-
-TODO
