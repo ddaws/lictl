@@ -19,4 +19,22 @@ echo "Rust installation complete:"
 rustc --version
 cargo --version
 
-echo "Rust setup completed successfully!"
+# Install pre-commit
+if command -v pre-commit &> /dev/null; then
+    echo "pre-commit is already installed. Updating..."
+    pip install --upgrade pre-commit
+else
+    echo "Installing pre-commit..."
+    pip install pre-commit
+fi
+
+# Verify pre-commit installation
+echo "pre-commit installation complete:"
+pre-commit --version
+
+# Install pre-commit hooks
+echo "Installing pre-commit hooks..."
+cd "$(git rev-parse --show-toplevel)" # Navigate to the root of the git repository
+pre-commit install
+
+echo "Setup completed successfully!"
