@@ -1,6 +1,6 @@
 use crate::{cmd::games::Format, constants::LICHESS_BASE, context::Context};
 use anyhow::{Result, anyhow};
-use serde_json::{Value, json};
+use serde_json::Value;
 
 pub async fn run(ctx: &Context, game_id: &str, format: Format) -> Result<Value> {
     let mut url = format!("{}/game/export/{}", LICHESS_BASE, game_id);
