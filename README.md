@@ -81,10 +81,36 @@ cargo build
 cargo build --release
 ```
 
+### Pre-commit Hooks
+
+This project uses pre-commit hooks to ensure code quality. The hooks run `cargo fmt` and `cargo clippy` before each commit.
+
+To set up the pre-commit hooks:
+
+```bash
+# Run the setup script
+./.openhands/setup.sh
+
+# Or manually install pre-commit and the hooks
+pip install pre-commit
+pre-commit install
+```
+
+The hooks will automatically run when you commit changes. You can also run them manually:
+
+```bash
+# Run all hooks on all files
+pre-commit run --all-files
+
+# Run a specific hook
+pre-commit run cargo-fmt
+pre-commit run cargo-clippy
+```
+
 ## Contributing
 
 1. Fork the repository
 2. Create a feature branch
-3. Commit your changes
+3. Commit your changes (pre-commit hooks will ensure code quality)
 4. Push to the branch
 5. Create a Pull Request
