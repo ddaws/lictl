@@ -27,6 +27,9 @@ tokio = { version = "1.44.1", features = ["macros", "rt", "rt-multi-thread"] }
 url = "2.5.0"
 webbrowser = "0.8.13"
 
+[dev-dependencies]
+mockito = "1.4.0"
+
 [target.'cfg(target_os = "linux")'.dependencies]
 # Enable linux-native feature only on Linux
 keyring = { version = "3.6.2", features = ["linux-native"] }
