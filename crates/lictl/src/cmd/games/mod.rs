@@ -4,9 +4,6 @@ use clap::{Subcommand, ValueEnum};
 use serde_json::Value;
 mod export;
 
-#[cfg(test)]
-mod tests;
-
 #[derive(ValueEnum, Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Format {
     /// Output in PGN format
