@@ -44,6 +44,11 @@ lictl broadcast-rounds get <round-id>
 ### Studies
 
 ```bash
+# Export chapter PGN for a study
+lictl studies export <study-id> <chapter-id>
+```
+
+```bash
 # Import PGN into a study
 lictl studies import <study-id> "<pgn-content>"
 ```
