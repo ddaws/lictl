@@ -15,13 +15,13 @@ impl Context {
         let mut headers = HeaderMap::new();
 
         // Try to get token from keyring
-        if let Ok(token_entry) = Entry::new(SERVICE_NAME, USERNAME) {
-            if let Ok(token) = token_entry.get_password() {
-                headers.insert(
-                    AUTHORIZATION,
-                    HeaderValue::from_str(&format!("Bearer {}", token))?,
-                );
-            }
+        if let Ok(token_entry) = Entry::new(SERVICE_NAME, USERNAME)
+            && let Ok(token) = token_entry.get_password()
+        {
+            headers.insert(
+                AUTHORIZATION,
+                HeaderValue::from_str(&format!("Bearer {}", token))?,
+            );
         }
 
         let client = Client::builder().default_headers(headers).build()?;
