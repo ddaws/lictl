@@ -15,7 +15,7 @@ readme = "../../README.md"
 anyhow = { workspace = true }
 axum = "0.8.4"
 base64 = "0.22.1"
-clap = { version = "4.5.45", features = ["derive"] } 
+clap = { version = "4", features = ["derive"] } 
 dialoguer = "0.12"
 keyring = { version = "3.6" }
 rand = "0.8.5"
