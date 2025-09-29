@@ -3,5 +3,5 @@ resolver = "2"
 members = ["crates/*"]
 
 [workspace.dependencies]
-anyhow = "1.0.99"
+anyhow = "1.0.100"
 serde = { version = "1.0.226", features = ["derive"] }
