@@ -13,7 +13,7 @@ readme = "../../README.md"
 
 [dependencies]
 anyhow = { workspace = true }
-axum = "0.8.4"
+axum = "0.8.5"
 base64 = "0.22.1"
 clap = { version = "4", features = ["derive"] } 
 dialoguer = "0.12"
